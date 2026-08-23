@@ -1,0 +1,65 @@
+VERSION ""
+
+NS_ :
+    NS_DESC_
+    CM_
+    BA_DEF_
+    BA_
+    VAL_
+    CAT_DEF_
+    CAT_
+    FILTER
+    BA_DEF_DEF_
+    EV_DATA_
+    ENVVAR_DATA_
+    SGTYPE_
+    SGTYPE_VAL_
+    BA_DEF_SGTYPE_
+    BA_SGTYPE_
+    SIG_TYPE_REF_
+    VAL_TABLE_
+    SIG_GROUP_
+    SIG_VALTYPE_
+    SIGTYPE_VALTYPE_
+    BO_TX_BU_
+    BA_DEF_REL_
+    BA_REL_
+    BA_SGTYPE_
+    SG_MUL_VAL_
+
+BS_:
+
+BU_: VehicleController CANAnalyzer
+
+BO_ 256 VehicleStatus1: 8 VehicleController
+ SG_ VehicleSpeed : 0|16@1+ (0.01,0) [0|120] "km/h" CANAnalyzer
+ SG_ EngineRPM : 16|16@1+ (1,0) [800|5000] "rpm" CANAnalyzer
+
+BO_ 257 VehicleStatus2: 8 VehicleController
+ SG_ CoolantTemperature : 0|8@1+ (1,-40) [20|120] "degC" CANAnalyzer
+ SG_ FuelLevel : 8|8@1+ (0.5,0) [0|100] "%" CANAnalyzer
+
+BO_ 258 BatteryStatus: 8 VehicleController
+ SG_ BatteryVoltage : 0|16@1+ (0.01,0) [11|15] "V" CANAnalyzer
+
+BO_ 259 AmbientStatus: 8 VehicleController
+ SG_ AmbientTemperature : 0|8@1- (1,-40) [-20|60] "degC" CANAnalyzer
+
+CM_ BO_ 259 "Ambient temperature information.";
+CM_ SG_ 259 AmbientTemperature "Ambient air temperature.";
+CM_ BO_ 256 "Vehicle speed and engine RPM information.";
+CM_ BO_ 257 "Coolant temperature and fuel level information.";
+CM_ BO_ 258 "Battery voltage information.";
+
+CM_ SG_ 256 VehicleSpeed "Vehicle speed in km/h.";
+CM_ SG_ 256 EngineRPM "Engine speed in revolutions per minute.";
+CM_ SG_ 257 CoolantTemperature "Coolant temperature with -40 degree C offset.";
+CM_ SG_ 257 FuelLevel "Fuel tank level percentage.";
+CM_ SG_ 258 BatteryVoltage "Vehicle battery voltage.";
+
+BA_DEF_ BO_ "GenMsgCycleTime" INT 0 10000;
+BA_DEF_DEF_ "GenMsgCycleTime" 100;
+
+BA_ "GenMsgCycleTime" BO_ 256 100;
+BA_ "GenMsgCycleTime" BO_ 257 100;
+BA_ "GenMsgCycleTime" BO_ 258 100;
